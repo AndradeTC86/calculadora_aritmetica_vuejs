@@ -1,6 +1,3 @@
-# calculadora_aritmetica_vuejs
-Calculadora Aritmética usando VueJS para o curso de Full Stack da EBAC
-
 # Calculadora Aritmética VueJS
 
 ## Aula de criação de uma calculadora aritmética usando VueJS
