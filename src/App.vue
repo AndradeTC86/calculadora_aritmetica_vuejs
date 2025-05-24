@@ -8,7 +8,10 @@ const possuiCTFL = true
 const possuiCTAL = false
 
 const estado = reactive({
-  contador: 0
+  contador: 0,
+  email: ' ',
+  saldo: 5000,
+  transferindo: 0
 })
 
 function incrementar(){
@@ -21,6 +24,16 @@ function decrementar(){
 
 function alteraEmail(evento){
   estado.email = evento.target.value
+}
+
+function mostraSaldoFuturo(){
+  const { saldo, transferindo } = estado
+  return saldo - transferindo
+}
+
+function validaValorTransferencia(){
+  const { saldo, transferindo } = estado
+  return saldo >= transferindo
 }
 
 </script>
@@ -36,8 +49,17 @@ function alteraEmail(evento){
 <button type="button" @click="decrementar">-</button>
 
 <hr />
-{{ estado.email }}
+Email: {{ estado.email }} <br>
 <input type="email" @keyup="alteraEmail" />
+
+<hr />
+
+Saldo: {{ estado.saldo }} <br>
+Transferindo: {{ estado.transferindo }} <br>
+Saldo depois da transferência: {{ mostraSaldoFuturo() }} <br>
+<input class="campo" :class="{ invalido: !validaValorTransferencia() }" @keyup="evento => estado.transferindo = evento.target.value" type="number" placeholder="Quantia a ser transferida" />
+<button v-if="validaValorTransferencia()">Transferir</button>
+<span v-else>Valor maior que o saldo</span>
 
 </template>
 
@@ -45,6 +67,15 @@ function alteraEmail(evento){
 
 img {
   max-width: 300px;
+}
+
+.invalido {
+  outline-color: red;
+  border-color: red;
+}
+
+.campo {
+  border: 2px solid black
 }
 
 </style>
