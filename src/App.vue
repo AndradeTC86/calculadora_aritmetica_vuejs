@@ -11,7 +11,9 @@ const estado = reactive({
   contador: 0,
   email: ' ',
   saldo: 5000,
-  transferindo: 0
+  transferindo: 0,
+  nomes: ['João', 'Maria', 'José', 'Ana', 'Pedro'],
+  nomeInserir: ''
 })
 
 function incrementar(){
@@ -36,6 +38,14 @@ function validaValorTransferencia(){
   return saldo >= transferindo
 }
 
+function cadastrarNome(){
+  if (estado.nomeInserir.length >= 3) {
+    estado.nomes.push(estado.nomeInserir)
+  } else {
+    alert('Nome deve ter pelo menos 3 caracteres')
+  }
+}
+
 </script>
 
 <template>
@@ -48,11 +58,11 @@ function validaValorTransferencia(){
 <button type="button" @click="incrementar">+</button>
 <button type="button" @click="decrementar">-</button>
 
-<hr />
+<hr>
 Email: {{ estado.email }} <br>
 <input type="email" @keyup="alteraEmail" />
 
-<hr />
+<hr>
 
 Saldo: {{ estado.saldo }} <br>
 Transferindo: {{ estado.transferindo }} <br>
@@ -61,6 +71,17 @@ Saldo depois da transferência: {{ mostraSaldoFuturo() }} <br>
 <button v-if="validaValorTransferencia()">Transferir</button>
 <span v-else>Valor maior que o saldo</span>
 
+<hr>
+
+<ul>
+  <li v-for="nome in estado.nomes">
+    {{ nome }}
+  </li>
+</ul>
+<input type="text" placeholder="Digite um nome" @keyup="evento => estado.nomeInserir = evento.target.value"/>
+<button type="button" @click="cadastrarNome()">Cadastrar nome</button>
+
+<h3 v-for="nome in estado.nomes"> {{ nome }} </h3>
 </template>
 
 <style scoped>
