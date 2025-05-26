@@ -45,3 +45,9 @@
     />
   </div>
 </template>
+
+<style scoped>
+  .container {
+    background-color: cadetblue;
+  }
+</style>
