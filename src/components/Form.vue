@@ -1,23 +1,18 @@
 <script setup>
-    const props = defineProps(['cadastraTarefa', 'tarefaTemp', 'trocarFiltro', 'editaTarefaTemp'])
+const props = defineProps(['getOperacao', 'estado'])
+const input1 = defineModel('input1')
+const input2 = defineModel('input2')
+const filtro = defineModel('filtro')
 </script>
 
 <template>
-    <form @submit.prevent="props.cadastraTarefa">
-        <div class="row">
-            <div class="col">
-                <input :value="props.tarefaTemp" @change="props.editaTarefaTemp" required type="text" placeholder="Digite a descrição da tarefa" class="form-control" />
-            </div>
-            <div class="col-md-2">
-                <button class="btn btn-primary" type="submit">Cadastrar</button>
-            </div>
-            <div class="col-md-2">
-                <select @change="props.trocarFiltro" class="form-control">
-                <option value="todas">Todas tarefas</option>
-                <option value="pendentes">Tarefas pendentes</option>
-                <option value="finalizadas">Tarefas finalizadas</option>
+    <form @submit.prevent="props.getOperacao">
+        <div class="row justify-content-center">
+            <input v-model.number="input1" type="number" placeholder="Digite o primeiro número" class="col-md-2 me-2" required />
+            <input v-model.number="input2" type="number" placeholder="Digite o segundo número" class="col-md-2 me-2" required />
+            <select v-model="filtro" class="col-md-2">
+                <option v-for="operacao in props.estado.operacoes" :key="operacao">{{ operacao }}</option>
             </select>
-            </div>
         </div>
     </form>
 </template>
